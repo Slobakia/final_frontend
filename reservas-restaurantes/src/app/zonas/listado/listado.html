@@ -1,11 +1,20 @@
 <h2>Zonas</h2>
 
-<button class="btn-nuevo" (click)="nueva()">Nueva Zona</button>
+<div class="filtros">
+  <label>Filtrar por Restaurante</label>
+  <select [(ngModel)]="filtroRestaurante" (change)="onChangeRestaurante()">
+    <option value="">-- Todos --</option>
+    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+  </select>
+
+  <button class="btn-nuevo" (click)="nueva()">Nueva Zona</button>
+</div>
 
 <table>
   <thead>
     <tr>
       <th>Nombre</th>
+      <th>Restaurante</th>
       <th>Horarios</th>
       <th class="acciones">Acciones</th>
     </tr>
@@ -14,12 +23,16 @@
   <tbody>
     <tr *ngFor="let z of zonas">
       <td>{{ z.nombre }}</td>
+      <td>{{ obtenerRestaurante(z.restauranteId) }}</td>
       <td>{{ z.horarios.join(', ') }}</td>
 
       <td class="acciones">
         <button class="btn-editar" (click)="editar(z.id)">Editar</button>
         <button class="btn-eliminar" (click)="eliminar(z.id)">Eliminar</button>
       </td>
+    </tr>
+    <tr *ngIf="zonas.length === 0">
+      <td colspan="4">No hay zonas.</td>
     </tr>
   </tbody>
 </table>

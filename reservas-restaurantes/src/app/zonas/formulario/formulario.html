@@ -2,15 +2,34 @@
 
 <div class="form-container">
 
+  <label>Restaurante</label>
+  <select [(ngModel)]="restauranteId">
+    <option value="">Seleccione...</option>
+    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+  </select>
+
   <label>Nombre</label>
   <input type="text" [(ngModel)]="nombre">
 
-  <label>Horarios (separados por coma)</label>
-  <input type="text" [(ngModel)]="horariosTexto" placeholder="Ej: 11:00, 12:00, 13:00">
+  <label>Agregar Horario</label>
+  <div class="horario-box">
+    <input type="time" [(ngModel)]="horarioTemporal">
+    <button (click)="agregarHorario()">Agregar</button>
+  </div>
+
+  <div class="lista-horarios" *ngIf="horarios.length > 0">
+    <p>Horarios añadidos:</p>
+    <ul>
+      <li *ngFor="let h of horarios">
+        {{ h }}
+        <button class="btn-eliminar" (click)="eliminarHorario(h)">X</button>
+      </li>
+    </ul>
+  </div>
 
   <div class="acciones">
-    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
     <button class="btn-guardar" (click)="guardar()">Guardar</button>
+    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
   </div>
 
 </div>

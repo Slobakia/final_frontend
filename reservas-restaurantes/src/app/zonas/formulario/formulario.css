@@ -1,36 +1,54 @@
 .form-container {
-  width: 350px;
+  width: 400px;
   display: flex;
   flex-direction: column;
 }
 
 label {
-  margin-bottom: 5px;
+  margin-top: 12px;
+  margin-bottom: 4px;
 }
 
-input {
+input, select {
   padding: 8px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
+}
+
+.horario-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.lista-horarios ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.btn-eliminar {
+  margin-left: 10px;
+  background: red;
+  color: white;
+  border: none;
+  padding: 2px 6px;
 }
 
 .acciones {
+  margin-top: 20px;
   display: flex;
-  justify-content: space-between;
-}
-
-.btn-cancelar {
-  background: #ccc;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  gap: 15px;
 }
 
 .btn-guardar {
-  background: #0066ff;
+  background: #007bff;
   color: white;
+  padding: 8px 14px;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+}
+
+.btn-cancelar {
+  background: #666;
+  color: white;
+  padding: 8px 14px;
+  border: none;
 }

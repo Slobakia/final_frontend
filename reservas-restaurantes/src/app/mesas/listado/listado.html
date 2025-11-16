@@ -1,12 +1,28 @@
 <h2>Mesas</h2>
 
-<button class="btn-nuevo" (click)="nueva()">Nueva Mesa</button>
+<div class="filtros">
+  <label>Restaurante</label>
+  <select [(ngModel)]="filtroRestaurante" (change)="onChangeRestaurante()">
+    <option value="">-- Todos --</option>
+    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+  </select>
+
+  <label>Zona</label>
+  <select [(ngModel)]="filtroZona" (change)="onChangeZona()">
+    <option value="">-- Todas --</option>
+    <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+  </select>
+
+  <button class="btn-nuevo" (click)="nueva()">Nueva Mesa</button>
+</div>
 
 <table>
   <thead>
     <tr>
       <th>Número</th>
       <th>Capacidad</th>
+      <th>Zona</th>
+      <th>Restaurante</th>
       <th class="acciones">Acciones</th>
     </tr>
   </thead>
@@ -15,10 +31,15 @@
     <tr *ngFor="let m of mesas">
       <td>{{ m.numero }}</td>
       <td>{{ m.capacidad }}</td>
+      <td>{{ obtenerZona(m.zonaId) }}</td>
+      <td>{{ obtenerRestauranteDesdeZona(m.zonaId) }}</td>
       <td class="acciones">
         <button class="btn-editar" (click)="editar(m.id)">Editar</button>
         <button class="btn-eliminar" (click)="eliminar(m.id)">Eliminar</button>
       </td>
+    </tr>
+    <tr *ngIf="mesas.length === 0">
+      <td colspan="5">No hay mesas.</td>
     </tr>
   </tbody>
 </table>

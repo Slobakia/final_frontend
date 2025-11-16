@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -24,13 +25,18 @@ export class ListadoComponent {
     private reservaService: ReservaService,
     private restauranteService: RestauranteService,
     private zonaService: ZonaService,
-    private mesaService: MesaService
+    private mesaService: MesaService,
+    private router: Router
   ) {
     this.cargar();
   }
 
   cargar() {
     this.reservas = this.reservaService.getAll();
+  }
+
+  nuevo() {
+    this.router.navigate(['/reservas/nuevo']);
   }
 
   obtenerNombreRestaurante(id: string) {

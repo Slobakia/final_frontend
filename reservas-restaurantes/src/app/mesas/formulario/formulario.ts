@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RestauranteService } from '../../services/restaurante.service';
+import { ZonaService } from '../../services/zona.service';
 import { MesaService } from '../../services/mesa.service';
 
 @Component({
@@ -18,14 +20,21 @@ export class FormularioComponent {
 
   numero: string = '';
   capacidad: number = 1;
+  restauranteId: string = '';
+
+  restaurantes: any[] = [];
+  zonas: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: MesaService
+    private service: MesaService,
+    private restauranteService: RestauranteService,
+    private zonaService: ZonaService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
     this.zonaId = this.route.snapshot.paramMap.get('zonaId') || '';
+    this.restaurantes = this.restauranteService.getAll();
 
     if (this.id) {
       const mesa = this.service.getById(this.id);
@@ -35,6 +44,10 @@ export class FormularioComponent {
         this.zonaId = mesa.zonaId;
       }
     }
+  }
+
+  cargarZonas() {
+    this.zonas = this.zonaService.getByRestaurante(this.restauranteId);
   }
 
   guardar() {
@@ -51,9 +64,7 @@ export class FormularioComponent {
       });
     }
 
-    this.router.navigate(['/mesas'], {
-      queryParams: { zonaId: this.zonaId }
-    });
+    this.router.navigate(['/mesas']);
   }
 
   cancelar() {

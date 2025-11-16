@@ -2,6 +2,18 @@
 
 <div class="form-container">
 
+  <label>Restaurante</label>
+  <select [(ngModel)]="restauranteId" (change)="cargarZonas()">
+    <option value="">Seleccione...</option>
+    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+  </select>
+
+  <label>Zona</label>
+  <select [(ngModel)]="zonaId">
+    <option value="">Seleccione...</option>
+    <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+  </select>
+
   <label>Número</label>
   <input type="text" [(ngModel)]="numero">
 
