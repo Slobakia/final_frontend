@@ -1,6 +1,23 @@
 <h2>Listado de Reservas</h2>
 
-<button class="btn-nuevo" (click)="nuevo()">Nueva Reserva</button>
+<div class="filtros">
+  <label>Restaurante</label>
+  <select [(ngModel)]="filtroRestaurante" (change)="onChangeRestaurante()">
+    <option value="">-- Todos --</option>
+    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+  </select>
+
+  <label>Zona</label>
+  <select [(ngModel)]="filtroZona" (change)="onChangeZona()">
+    <option value="">-- Todas --</option>
+    <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+  </select>
+
+  <label>Fecha</label>
+  <input type="date" [(ngModel)]="filtroFecha" (change)="onChangeFecha()">
+
+  <button class="btn-nuevo" (click)="nuevo()">Nueva Reserva</button>
+</div>
 
 <table>
   <thead>
@@ -11,21 +28,25 @@
       <th>Fecha</th>
       <th>Hora</th>
       <th>Mesa</th>
-      <th class="acciones">Acciones</th>
+      <th class="acciones-col">Acciones</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr *ngFor="let r of reservas">
+    <tr *ngFor="let r of mostradas">
       <td>{{ r.nombreCliente }} {{ r.apellidoCliente }}</td>
       <td>{{ obtenerNombreRestaurante(r.restauranteId) }}</td>
       <td>{{ obtenerNombreZona(r.zonaId) }}</td>
       <td>{{ r.fecha }}</td>
       <td>{{ r.hora }}</td>
       <td>{{ obtenerMesa(r.mesaId) }}</td>
-      <td class="acciones">
+      <td class="acciones-col">
+        <button class="btn-editar" (click)="editar(r.id)">Editar</button>
         <button class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
       </td>
+    </tr>
+    <tr *ngIf="mostradas.length === 0">
+      <td colspan="7">No hay reservas con esos filtros.</td>
     </tr>
   </tbody>
 </table>

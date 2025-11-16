@@ -31,6 +31,15 @@ export class ReservaService {
     return nueva;
   }
 
+  update(id: string, datos: Partial<Omit<Reserva, 'id'>>): Reserva | null {
+    const lista = this.getAll();
+    const idx = lista.findIndex(r => r.id === id);
+    if (idx === -1) return null;
+    lista[idx] = { ...lista[idx], ...datos };
+    this.storage.setItem(this.KEY, lista);
+    return lista[idx];
+  }
+
   delete(id: string): boolean {
     const lista = this.getAll();
     const nuevaLista = lista.filter(r => r.id !== id);

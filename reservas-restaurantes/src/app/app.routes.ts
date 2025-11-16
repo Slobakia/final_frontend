@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 export const routes: Routes = [
+  { path: '', component: DashboardComponent },
   {
     path: 'restaurantes',
     loadChildren: () =>
@@ -21,6 +23,5 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./reservas/reservas-routing.module').then(m => m.ReservaRoutingModule),
   },
-  { path: '', redirectTo: 'reservas', pathMatch: 'full' },
-  { path: '**', redirectTo: 'reservas' }
+  { path: '**', redirectTo: '' }
 ];

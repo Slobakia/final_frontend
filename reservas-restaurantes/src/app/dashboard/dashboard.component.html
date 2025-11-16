@@ -1,0 +1,78 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Sistema de Reservas</h1>
+    <p>Gestión de restaurantes, zonas, mesas y reservas</p>
+  </header>
+
+  <section class="modules-section">
+    <h2>Módulos del Sistema</h2>
+    <p>Selecciona el módulo que desees administrar.</p>
+
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="card-content">
+          <img src="app/assets/icons/restaurante.png" alt="Restaurantes" class="card-icon">
+          <h3>Restaurantes</h3>
+          <p>Gestiona los restaurantes del sistema.</p>
+          <a routerLink="/restaurantes" class="module-link">
+            Ir al módulo 
+          </a>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="card-content">
+          <img src="app/assets/icons/zona.png" alt="Zonas" class="card-icon">
+          <h3>Zonas</h3>
+          <p>Administra zonas y ambientes.</p>
+          <a routerLink="/zonas" class="module-link">
+            Ir al módulo 
+          </a>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="card-content">
+          <img src="app/assets/icons/horario.png" alt="Horarios" class="card-icon">
+          <h3>Horarios</h3>
+          <p>Configura horarios de reserva.</p>
+          <a routerLink="/horarios" class="module-link">
+            Ir al módulo 
+          </a>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="card-content">
+          <img src="app/assets/icons/reserva.png" alt="Reservas" class="card-icon">
+          <h3>Reservas</h3>
+          <p>Visualiza y gestiona reservas.</p>
+          <a routerLink="/reservas" class="module-link">
+            Ir al módulo 
+          </a>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="card-content">
+          <img src="app/assets/icons/mesa.png" alt="Mesas" class="card-icon">
+          <h3>Mesas</h3>
+          <p>Gestiona las mesas disponibles.</p>
+          <a routerLink="/mesas" class="module-link">
+            Ir al módulo 
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reservation-cta">
+    <div class="cta-content">
+      <h2>¿Listo para crear una reserva?</h2>
+      <p>Inicia el proceso de reserva en pocos pasos.</p>
+      <button routerLink="/nueva-reserva" class="cta-button">
+        Crear Reserva
+      </button>
+    </div>
+  </section>
+</div>

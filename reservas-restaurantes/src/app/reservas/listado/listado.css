@@ -12,9 +12,16 @@ th, td {
   padding: 8px;
 }
 
-.acciones {
-  width: 100px;
+.acciones-col {
+  width: 160px;
   text-align: center;
+}
+
+.btn-editar {
+  background: #ffcc00;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
 }
 
 .btn-eliminar {

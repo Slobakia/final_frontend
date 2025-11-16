@@ -1,4 +1,4 @@
-<h2>Nueva Reserva</h2>
+<h2>{{id ? 'Editar Reserva' : 'Nueva Reserva'}}</h2>
 
 <div class="form-container">
 
@@ -38,7 +38,7 @@
   <p class="error" *ngIf="mensajeError">{{ mensajeError }}</p>
 
   <div class="acciones">
-    <button class="btn-confirmar" (click)="confirmar()">Confirmar Reserva</button>
+    <button class="btn-confirmar" (click)="confirmar()">{{id ? 'Actualizar Reserva' : 'Confirmar Reserva'}}</button>
   </div>
 
 </div>
