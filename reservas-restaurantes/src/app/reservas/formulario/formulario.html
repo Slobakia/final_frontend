@@ -1,0 +1,44 @@
+<h2>Nueva Reserva</h2>
+
+<div class="form-container">
+
+  <label>Restaurante</label>
+  <select [(ngModel)]="restauranteId" (change)="cargarZonas()">
+    <option value="">Seleccione...</option>
+    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+  </select>
+
+  <label>Zona</label>
+  <select [(ngModel)]="zonaId" (change)="cargarHorarios()">
+    <option value="">Seleccione...</option>
+    <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+  </select>
+
+  <label>Fecha</label>
+  <input type="date" [(ngModel)]="fecha">
+
+  <label>Horario</label>
+  <select [(ngModel)]="hora">
+    <option value="">Seleccione...</option>
+    <option *ngFor="let h of horariosZona">{{ h }}</option>
+  </select>
+
+  <label>Cantidad de Personas</label>
+  <input type="number" min="1" [(ngModel)]="cantidadPersonas">
+
+  <label>Nombre</label>
+  <input type="text" [(ngModel)]="nombreCliente">
+
+  <label>Apellido</label>
+  <input type="text" [(ngModel)]="apellidoCliente">
+
+  <label>Teléfono</label>
+  <input type="text" [(ngModel)]="telefono">
+
+  <p class="error" *ngIf="mensajeError">{{ mensajeError }}</p>
+
+  <div class="acciones">
+    <button class="btn-confirmar" (click)="confirmar()">Confirmar Reserva</button>
+  </div>
+
+</div>

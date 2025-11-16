@@ -1,0 +1,16 @@
+<h2>{{ id ? 'Editar Zona' : 'Nueva Zona' }}</h2>
+
+<div class="form-container">
+
+  <label>Nombre</label>
+  <input type="text" [(ngModel)]="nombre">
+
+  <label>Horarios (separados por coma)</label>
+  <input type="text" [(ngModel)]="horariosTexto" placeholder="Ej: 11:00, 12:00, 13:00">
+
+  <div class="acciones">
+    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+    <button class="btn-guardar" (click)="guardar()">Guardar</button>
+  </div>
+
+</div>

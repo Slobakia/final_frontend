@@ -1,0 +1,11 @@
+<h2>{{ id ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h2>
+
+<div class="form-container">
+  <label>Nombre del Restaurante</label>
+  <input type="text" [(ngModel)]="nombre" placeholder="Ej: La Parrilla de Juan">
+
+  <div class="acciones">
+    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+    <button class="btn-guardar" (click)="guardar()">Guardar</button>
+  </div>
+</div>

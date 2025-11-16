@@ -1,0 +1,23 @@
+<h2>Listado de Restaurantes</h2>
+
+<button class="btn-nuevo" (click)="nuevo()">Nuevo Restaurante</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th class="acciones-col">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let r of restaurantes">
+      <td>{{ r.nombre }}</td>
+
+      <td class="acciones-col">
+        <button class="btn-editar" (click)="editar(r.id)">Editar</button>
+        <button class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

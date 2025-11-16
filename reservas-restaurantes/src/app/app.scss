@@ -1,0 +1,20 @@
+.menu {
+  display: flex;
+  gap: 20px;
+  background: #222;
+  padding: 10px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.contenido {
+  padding: 20px;
+}

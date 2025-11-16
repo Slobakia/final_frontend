@@ -1,0 +1,29 @@
+.form-container {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 6px 0 4px 0;
+}
+
+input, select {
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.btn-confirmar {
+  background: #0066ff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+}

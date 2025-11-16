@@ -1,0 +1,16 @@
+<h2>{{ id ? 'Editar Mesa' : 'Nueva Mesa' }}</h2>
+
+<div class="form-container">
+
+  <label>Número</label>
+  <input type="text" [(ngModel)]="numero">
+
+  <label>Capacidad</label>
+  <input type="number" min="1" [(ngModel)]="capacidad">
+
+  <div class="acciones">
+    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+    <button class="btn-guardar" (click)="guardar()">Guardar</button>
+  </div>
+
+</div>

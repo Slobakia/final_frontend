@@ -1,0 +1,42 @@
+h2 {
+  margin-bottom: 15px;
+}
+
+.btn-nuevo {
+  background: #0066ff;
+  color: white;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.acciones {
+  text-align: center;
+  width: 150px;
+}
+
+.btn-editar {
+  background: #ffcc00;
+  border: none;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.btn-eliminar {
+  background: #e60000;
+  color: white;
+  border: none;
+  padding: 5px;
+}

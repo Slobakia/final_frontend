@@ -1,0 +1,24 @@
+<h2>Mesas</h2>
+
+<button class="btn-nuevo" (click)="nueva()">Nueva Mesa</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>Capacidad</th>
+      <th class="acciones">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let m of mesas">
+      <td>{{ m.numero }}</td>
+      <td>{{ m.capacidad }}</td>
+      <td class="acciones">
+        <button class="btn-editar" (click)="editar(m.id)">Editar</button>
+        <button class="btn-eliminar" (click)="eliminar(m.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

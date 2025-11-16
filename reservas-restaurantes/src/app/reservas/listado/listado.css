@@ -1,0 +1,25 @@
+h2 {
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.acciones {
+  width: 100px;
+  text-align: center;
+}
+
+.btn-eliminar {
+  background: #e60000;
+  color: white;
+  border: none;
+  padding: 6px;
+}

@@ -1,0 +1,25 @@
+<h2>Zonas</h2>
+
+<button class="btn-nuevo" (click)="nueva()">Nueva Zona</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Horarios</th>
+      <th class="acciones">Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let z of zonas">
+      <td>{{ z.nombre }}</td>
+      <td>{{ z.horarios.join(', ') }}</td>
+
+      <td class="acciones">
+        <button class="btn-editar" (click)="editar(z.id)">Editar</button>
+        <button class="btn-eliminar" (click)="eliminar(z.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
