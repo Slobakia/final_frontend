@@ -1,41 +1,271 @@
-h2 {
-  margin-bottom: 15px;
+.zonas-container {
+  padding: 20px 40px;
+  font-family: "Inter", sans-serif;
+  color: #333;
+  background: #f9f9f996;
 }
 
-.btn-nuevo {
-  background: #0066ff;
+.btn-back {
+  width: 30px;
+  height: 35px;
+  background: #f7a440;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.btn-back:hover {
+  background: #e58e2a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.btn-back img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(0) invert(1);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.header-icon-container {
+  width: 40px;
+  height: 40px;
+  background: #f7a440;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-icon {
+  width: 22px;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.page-header p {
+  margin: 0;
+  color: #777;
+  font-size: 13px;
+}
+
+.top-actions {
+  margin-bottom: 25px;
+}
+
+.search-filters {
+  display: flex;
+  gap: 50px;
+  width: 70%;
+}
+
+.search-bar {
+  flex: 2;
+}
+
+.filter-select {
+  flex: 1;
+}
+
+.search-input,
+.filter-select {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.btn-nueva-zona {
+  padding: 10px 18px;
+  background: #e9992d;
   color: white;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.stat-card {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-th, td {
-  border: 1px solid #ddd;
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  background: #fdecd0;
+  margin-top: 5%;
   padding: 10px;
+  border-radius: 50%;
 }
 
-.acciones {
-  width: 150px;
+.no-zonas {
   text-align: center;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 40px 0;
+}
+
+.no-zonas-icon {
+  background: #f7a440;
+  padding: 15px;
+  border-radius: 50%;
+}
+
+.zonas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.zona-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0px 3px 7px rgba(0,0,0,0.05);
+  position: relative;
+}
+
+.zona-icon {
+  width: 28px;
+  background: #fdecd0;
+  padding: 10px;
+  border-radius: 20%;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.zona-name {
+  margin: 0 0 5px 0;
+  font-size: 18px;
+}
+
+.restaurante-name {
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.horarios-label {
+  margin-top: 10px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.horarios-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.horario-tag {
+  background: #ffe8d3;        
+  border: 1px solid #f3c7a4;
+  color: #E68932;              
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.zona-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.zona-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
 }
 
 .btn-editar {
-  background: #ffcc00;
-  border: none;
-  padding: 5px;
-  margin-right: 5px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 7;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.btn-editar img {
+  width: 16px;
+}
+
+.btn-editar:hover {
+  background: #f9f9f9;
 }
 
 .btn-eliminar {
-  background: #e60000;
-  color: white;
-  border: none;
-  padding: 5px;
+  background: #ffe5e5;
+  border: 1px solid #ffb3b3;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-eliminar img {
+  width: 16px;
+}
+
+.btn-eliminar:hover {
+  background: #ffcccc;
 }

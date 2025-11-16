@@ -1,38 +1,100 @@
-<h2>Zonas</h2>
+<div class="zonas-container">
 
-<div class="filtros">
-  <label>Filtrar por Restaurante</label>
-  <select [(ngModel)]="filtroRestaurante" (change)="onChangeRestaurante()">
-    <option value="">-- Todos --</option>
-    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
-  </select>
+  <header class="page-header">
+    <div class="header-info">
+      <button class="btn-back" (click)="atras()">
+        <img src="assets/icons/atras.png" alt="Volver">
+      </button>
+      <div class="header-icon-container">
+        <img src="assets/icons/zona.png" alt="Zona" class="header-icon">
+      </div>
+      <div>
+        <h1>Gestión de Zonas</h1>
+        <p>Administra las zonas y ambientes de cada restaurante</p>
+      </div>
+    </div>
+    <div>
+      <button class="btn-nueva-zona" (click)="nueva()">
+        + Nueva Zona
+      </button>
+    </div>
+  </header>
 
-  <button class="btn-nuevo" (click)="nueva()">Nueva Zona</button>
+  <div class="top-actions">
+
+    <div class="search-filters">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Buscar zonas..." 
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+        >
+      </div>
+
+      <select 
+        class="filter-select"
+        [(ngModel)]="filtroRestaurante"
+        (change)="onChangeRestaurante()"
+      >
+        <option value="">Filtrar por restaurante</option>
+        <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+      </select>
+
+    </div>
+  </div>
+  
+  <section class="stats-section">
+    <div class="stat-card">
+      <div class="stat-content">
+        <h3>Total Zonas</h3>
+        <p class="stat-number">{{ totalZonas }}</p>
+      </div>
+      <img src="assets/icons/zona.png" alt="Zonas" class="stat-icon">
+    </div>
+  </section>
+
+  <div *ngIf="zonas.length === 0" class="no-zonas">
+    <img src="assets/icons/zona.png" alt="No Zonas" class="no-zonas-icon">
+    <p class="no-zonas">No se encontraron zonas, agrega una nueva zona para comenzar.</p>
+  </div>
+
+  <section class="zonas-grid">
+
+    <div class="zona-card" *ngFor="let zona of zonas">
+
+      <img src="assets/icons/zona.png" class="zona-icon">
+
+      <h3 class="zona-name">{{ zona.nombre }}</h3>
+
+      <p class="restaurante-name">
+        {{ obtenerRestaurante(zona.restauranteId) }}
+      </p>
+
+      <p class="horarios-label">Horarios:</p>
+      <div class="horarios-tags">
+        <span class="horario-tag" *ngFor="let h of zona.horarios">
+          {{ h }}
+        </span>
+      </div>
+
+      <div class="zona-footer">
+        <div class="zona-buttons">
+          <button class="btn-editar" (click)="editar(zona.id)">
+            <img src="assets/icons/editar.png" alt="Editar">
+            Editar
+          </button>
+
+          <button class="btn-eliminar" (click)="eliminar(zona.id)">
+            <img src="assets/icons/eliminar.png" alt="Eliminar">
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Restaurante</th>
-      <th>Horarios</th>
-      <th class="acciones">Acciones</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr *ngFor="let z of zonas">
-      <td>{{ z.nombre }}</td>
-      <td>{{ obtenerRestaurante(z.restauranteId) }}</td>
-      <td>{{ z.horarios.join(', ') }}</td>
-
-      <td class="acciones">
-        <button class="btn-editar" (click)="editar(z.id)">Editar</button>
-        <button class="btn-eliminar" (click)="eliminar(z.id)">Eliminar</button>
-      </td>
-    </tr>
-    <tr *ngIf="zonas.length === 0">
-      <td colspan="4">No hay zonas.</td>
-    </tr>
-  </tbody>
-</table>

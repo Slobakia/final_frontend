@@ -21,6 +21,7 @@ export class ListadoComponent {
   restaurantes: Restaurante[] = [];
   restauranteId: string = '';
   filtroRestaurante: string = '';
+  searchTerm: string = '';
 
   constructor(
     private zonaService: ZonaService,
@@ -34,11 +35,26 @@ export class ListadoComponent {
   }
 
   cargar() {
+    let zonasFiltradas: Zona[] = [];
+
     if (this.filtroRestaurante) {
-      this.zonas = this.zonaService.getByRestaurante(this.filtroRestaurante);
+      zonasFiltradas = this.zonaService.getByRestaurante(this.filtroRestaurante);
     } else {
-      this.zonas = this.zonaService.getAll();
+      zonasFiltradas = this.zonaService.getAll();
     }
+
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
+      zonasFiltradas = zonasFiltradas.filter(zona => 
+        zona.nombre.toLowerCase().includes(term)
+      );
+    }
+
+    this.zonas = zonasFiltradas;
+  }
+
+  onSearchChange() {
+    this.cargar();
   }
 
   onChangeRestaurante() {
@@ -60,5 +76,13 @@ export class ListadoComponent {
   eliminar(id: string) {
     this.zonaService.delete(id);
     this.cargar();
+  }
+
+  atras() {
+    this.router.navigate(['']);
+  }
+  
+  get totalZonas(): number {
+    return this.zonas.length;
   }
 }

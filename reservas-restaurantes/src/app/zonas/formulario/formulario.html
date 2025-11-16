@@ -1,35 +1,62 @@
-<h2>{{ id ? 'Editar Zona' : 'Nueva Zona' }}</h2>
+<div class="form-header">
+  <button class="btn-back" (click)="cancelar()">
+    <img src="assets/icons/atras.png" alt="Volver">
+  </button>
 
-<div class="form-container">
+  <div class="header-title">
+    <img src="assets/icons/zona.png" class="header-icon" alt="Zona">
+    <div>
+      <h2>{{ id ? 'Editar Zona' : 'Nueva Zona' }}</h2>
+      <p>Completa la información de la zona</p>
+    </div>
+  </div>
+</div>
 
-  <label>Restaurante</label>
-  <select [(ngModel)]="restauranteId">
-    <option value="">Seleccione...</option>
-    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
-  </select>
+<hr>
 
-  <label>Nombre</label>
-  <input type="text" [(ngModel)]="nombre">
-
-  <label>Agregar Horario</label>
-  <div class="horario-box">
-    <input type="time" [(ngModel)]="horarioTemporal">
-    <button (click)="agregarHorario()">Agregar</button>
+<div class="form-card">
+  <div class="form-group">
+    <label>Restaurante *</label>
+    <select [(ngModel)]="restauranteId">
+      <option value="">Seleccione un restaurante...</option>
+      <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+    </select>
+    <small>El restaurante al que pertenece la zona</small>
   </div>
 
-  <div class="lista-horarios" *ngIf="horarios.length > 0">
-    <p>Horarios añadidos:</p>
-    <ul>
-      <li *ngFor="let h of horarios">
+  <div class="form-group">
+    <label>Nombre de la Zona *</label>
+    <input type="text" [(ngModel)]="nombre" placeholder="Ej: Terraza">
+    <small>El nombre con el que se identificará la zona</small>
+  </div>
+
+  <label class="section-title">Horarios</label>
+
+  <div class="form-group horario-input">
+    <div class="horario-add">
+      <input type="time" [(ngModel)]="horarioTemporal">
+      <button class="btn-add" (click)="agregarHorario()">Agregar</button>
+    </div>
+    <small>Hora en formato 24h</small>
+  </div>
+
+  <div class="horarios-list" *ngIf="horarios.length > 0">
+    <label>Horarios añadidos</label>
+
+    <div class="horario-tags">
+      <div class="tag" *ngFor="let h of horarios">
         {{ h }}
-        <button class="btn-eliminar" (click)="eliminarHorario(h)">X</button>
-      </li>
-    </ul>
+        <button (click)="eliminarHorario(h)">✕</button>
+      </div>
+    </div>
   </div>
 
   <div class="acciones">
-    <button class="btn-guardar" (click)="guardar()">Guardar</button>
     <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+    <button class="btn-guardar" (click)="guardar()">
+      <img src="assets/icons/guardar.png" alt="">
+      {{ id ? 'Actualizar Zona' : 'Guardar Zona' }}
+    </button>
   </div>
 
 </div>

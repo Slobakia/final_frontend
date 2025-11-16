@@ -58,11 +58,6 @@ export class FormularioComponent {
   }
 
   guardar() {
-    if (this.horarios.length === 0) {
-      alert("Debe agregar al menos un horario.");
-      return;
-    }
-
     if (this.id) {
       this.zonaService.update(this.id, {
         nombre: this.nombre,

@@ -6,7 +6,7 @@ import { FormularioComponent } from './formulario/formulario';
 
 const routes: Routes = [
   { path: '', component: ListadoComponent },
-  { path: 'nuevo/:restauranteId', component: FormularioComponent },
+  { path: 'nuevo', component: FormularioComponent },
   { path: 'editar/:id', component: FormularioComponent }
 ];
 

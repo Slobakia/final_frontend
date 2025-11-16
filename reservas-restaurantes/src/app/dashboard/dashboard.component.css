@@ -17,13 +17,13 @@
 .dashboard-header h1 {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #E68932;
   font-weight: 700;
 }
 
 .dashboard-header p {
   font-size: 1.2rem;
-  color: #7f8c8d;
+  color: #e0a771;
   margin: 0;
   font-weight: 400;
 }
@@ -35,7 +35,7 @@
 .modules-section h2 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
-  color: #2c3e50;
+  color: #E68932;
   font-weight: 600;
 }
 
@@ -78,7 +78,6 @@
 .module-card:nth-child(2)::before { background: linear-gradient(90deg, #2ecc71, #27ae60); } /* Zonas - Verde */
 .module-card:nth-child(3)::before { background: linear-gradient(90deg, #9b59b6, #8e44ad); } /* Horarios - Púrpura */
 .module-card:nth-child(4)::before { background: linear-gradient(90deg, #3498db, #2980b9); } /* Reservas - Azul */
-.module-card:nth-child(5)::before { background: linear-gradient(90deg, #f39c12, #e67e22); } /* Mesas - Naranja */
 
 .module-card:hover {
   transform: translateY(-6px);
@@ -97,7 +96,7 @@
   display: inline-block;
   padding: 0.75rem;
   border-radius: 12px;
-  background: rgba(52, 152, 219, 0.1);
+  background: #7aaed11a;
   object-fit: contain;
 }
 .module-card:nth-child(1) .card-icon { 
@@ -111,9 +110,6 @@
 }
 .module-card:nth-child(4) .card-icon { 
   background: rgba(52, 152, 219, 0.1); 
-}
-.module-card:nth-child(5) .card-icon { 
-  background: rgba(243, 156, 18, 0.1); 
 }
 
 .card-content h3 {
@@ -133,7 +129,7 @@
 .module-link {
   display: inline-flex;
   align-items: center;
-  color: #3498db;
+  color: #E68932;
   text-decoration: none;
   font-weight: 600;
   font-size: 1rem;
@@ -142,7 +138,7 @@
 }
 
 .module-link:hover {
-  color: #2980b9;
+  color: #f8b475;
   transform: translateX(4px);
 }
 
@@ -157,9 +153,9 @@
 }
 
 .reservation-cta {
-  background: linear-gradient(135deg, rgba(255, 140, 66, 0.8) 0%, rgba(255, 107, 53, 0.8) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #E68932;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 3.5rem 2rem;
