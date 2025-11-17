@@ -45,6 +45,8 @@ export class FormularioComponent {
   mesIndex: number = 0;
   anio: number = 0;
 
+  capacidadSuficiente: boolean = true;
+
   constructor(
     private restauranteService: RestauranteService,
     private zonaService: ZonaService,
@@ -82,6 +84,9 @@ export class FormularioComponent {
     if (paso >= 1 && paso <= this.totalPasos) {
       this.pasoActual = paso;
     }
+    if (paso === 4) {
+      this.verificarCapacidad();
+    }
   }
 
   validarPasoActual(): boolean {
@@ -108,10 +113,53 @@ export class FormularioComponent {
   }
 
   cargarHorarios() {
-    if (this.zonaId) {
-      const zona = this.zonaService.getById(this.zonaId);
-      this.horariosDisponibles = zona ? zona.horarios : [];
+    this.horariosDisponibles = [];
+
+    if (!this.zonaId || !this.fecha) {
+      return;
     }
+
+    const zona = this.zonaService.getById(this.zonaId);
+    if (!zona || !Array.isArray(zona.horarios)) return;
+
+    const todasHorarios = zona.horarios.map(h => this.normalizeTime(h));
+    const mesas = this.mesaService.getAll();
+    let reservas = this.reservaService.getAll();
+
+
+    const disponibles: string[] = [];
+
+    for (const horarioRaw of todasHorarios) {
+      const horario = this.normalizeTime(horarioRaw);
+
+      const mesa = this.disponibilidadService.asignarMesa(
+        mesas,
+        reservas,
+        this.zonaId,
+        this.fecha,
+        horario,
+        this.cantidadPersonas
+      );
+
+      if (mesa) {
+        disponibles.push(horario);
+      }
+    }
+
+    this.horariosDisponibles = Array.from(new Set(disponibles)).sort((a,b) => a.localeCompare(b));
+  }
+
+  verificarCapacidad() {
+    if (!this.zonaId || !this.fecha || !this.hora) {
+      this.capacidadSuficiente = false;
+      return;
+    }
+
+    const mesas = this.mesaService.getAll().filter(m => m.zonaId === this.zonaId);
+
+    const existeMesa = mesas.some(m => (m.capacidad || 0) >= this.cantidadPersonas);
+
+    this.capacidadSuficiente = existeMesa;
   }
 
   generarCalendario(month?: number, year?: number) {
@@ -162,10 +210,15 @@ export class FormularioComponent {
   }
 
   seleccionarFecha(dia: number) {
-    const fecha = new Date();
-    fecha.setDate(dia);
-    this.fecha = fecha.toISOString().split('T')[0];
+    const fechaLocal = new Date(this.anio, this.mesIndex, dia);
+
+    const yyyy = fechaLocal.getFullYear();
+    const mm = String(fechaLocal.getMonth() + 1).padStart(2, '0');
+    const dd = String(fechaLocal.getDate()).padStart(2, '0');
+    
+    this.fecha = `${yyyy}-${mm}-${dd}`;
     this.diaSeleccionado = dia;
+    this.cargarHorarios();
   }
 
   estaDiaSeleccionado(dia: number): boolean {
@@ -174,14 +227,17 @@ export class FormularioComponent {
 
   disminuirCantidad() {
     this.cantidadPersonas = Math.max(1, this.cantidadPersonas - 1);
+    this.verificarCapacidad();
   }
 
   aumentarCantidad() {
     this.cantidadPersonas++;
+    this.verificarCapacidad();
   }
 
   seleccionarCantidadRapida(cantidad: number) {
     this.cantidadPersonas = cantidad;
+    this.verificarCapacidad();  
   }
 
   confirmarReserva() {
@@ -228,8 +284,35 @@ export class FormularioComponent {
 
   getFechaFormateada(): string {
     if (!this.fecha) return '';
-    const fechaObj = new Date(this.fecha);
-    return `${fechaObj.getDate()}/${fechaObj.getMonth() + 1}/${fechaObj.getFullYear()}`;
+    const [y, m, d] = this.fecha.split('-').map(s => parseInt(s, 10));
+    return `${d}/${m}/${y}`;
+  }
+
+  normalizeTime(t: string): string {
+    if (!t) return '';
+    const parts = t.split(':').map(p => p.trim());
+    if (parts.length === 1) return parts[0].padStart(2, '0') + ':00';
+    const hh = parts[0].padStart(2, '0');
+    const mm = (parts[1] || '00').padStart(2, '0');
+    return `${hh}:${mm}`;
+  }
+
+  normalizeDate(d: string): string {
+    if (!d) return '';
+    const parts = d.split('-');
+    if (parts.length === 3) {
+      const yyyy = parts[0];
+      const mm = parts[1].padStart(2, '0');
+      const dd = parts[2].padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    const dateObj = new Date(d);
+    if (isNaN(dateObj.getTime())) return d;
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const dd = String(dateObj.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
   }
 
   atras(){

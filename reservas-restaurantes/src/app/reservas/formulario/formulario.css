@@ -454,6 +454,16 @@
   border:1px solid #efefef;
 }
 
+.alert-error {
+  margin-top: 12px;
+  background: #ffe3e3;
+  border: 1px solid #ffb4b4;
+  color: #b00000;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+
 .btn-cantidad{
   width:48px;
   height:48px;

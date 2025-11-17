@@ -117,7 +117,7 @@
             <div *ngFor="let horario of horariosDisponibles" 
                 class="horario-option" 
                 [class.seleccionado]="hora === horario"
-                (click)="hora = horario">
+                (click)="hora = horario; verificarCapacidad()">
               {{ horario }}
             </div>
           </div>
@@ -136,6 +136,10 @@
           <button class="btn-cantidad" (click)="disminuirCantidad()">-</button>
           <span class="cantidad-display">{{ cantidadPersonas }}</span>
           <button class="btn-cantidad" (click)="aumentarCantidad()">+</button>
+        </div>
+        
+        <div *ngIf="!capacidadSuficiente" class="alert-error">
+          No hay mesas disponibles para {{ cantidadPersonas }} persona(s).
         </div>
         
         <div class="seleccion-rapida">
@@ -213,13 +217,12 @@
 
   </div>
 
-  <!-- Navegación -->
   <div class="navegacion">
     <button class="btn-anterior" (click)="anteriorPaso()" *ngIf="pasoActual > 1">
       ← Anterior
     </button>
     
-    <button class="btn-siguiente" (click)="siguientePaso()" *ngIf="pasoActual < 5" [disabled]="!validarPasoActual()">
+    <button class="btn-siguiente" (click)="siguientePaso()" *ngIf="pasoActual < 5" [disabled]="!validarPasoActual() || (pasoActual === 4 && !capacidadSuficiente)">
       Siguiente →
     </button>
     

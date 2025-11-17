@@ -371,11 +371,10 @@
 }
 
 .btn-cancelar{
-  border-color: rgba(255, 77, 79, 0.14);
-  color:#ff4d4f;
+  border-color: rgba(246, 163, 59, 0.14);
+  color: #f6a33b;
 }
 
-.btn-detalles:hover,
 .btn-editar:hover,
 .btn-cancelar:hover{
   transform: translateY(-2px);
@@ -445,7 +444,6 @@
     align-items:flex-start;
     gap:12px;
   }
-  .btn-detalles,
   .btn-editar,
   .btn-cancelar{
     width:100%;
