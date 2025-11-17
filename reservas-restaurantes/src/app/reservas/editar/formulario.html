@@ -1,0 +1,99 @@
+<div class="form-header">
+  <button class="btn-back" (click)="cancelar()">
+    <img src="assets/icons/atras.png" alt="Volver">
+  </button>
+
+  <div class="header-title">
+    <img src="assets/icons/restaurante.png" class="header-icon" alt="Reserva">
+    <div>
+      <h2>{{ id ? 'Editar Reserva' : 'Nueva Reserva' }}</h2>
+      <p>Completa la información de la reserva</p>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="form-card">
+  <div class="form-group">
+    <label>Restaurante *</label>
+    <select [(ngModel)]="restauranteId" (blur)="touchedRestaurante = true" (change)="cargarZonas()" [class.input-error]="(submitted || touchedRestaurante) && !(restauranteId && restauranteId.trim())">
+      <option value="">Seleccione un restaurante...</option>
+      <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+    </select>
+    <small *ngIf="(submitted || touchedRestaurante) && !(restauranteId && restauranteId.trim())" class="error-text">Debe seleccionar un restaurante.</small>
+    <small *ngIf="!((submitted || touchedRestaurante) && !(restauranteId && restauranteId.trim()))" class="help-text">El restaurante donde se realizará la reserva</small>
+  </div>
+
+  <div class="form-group">
+    <label>Zona *</label>
+    <select [(ngModel)]="zonaId" (change)="cargarMesas()" [class.input-error]="(submitted) && !(zonaId && zonaId.trim())">
+      <option value="">Seleccione una zona...</option>
+      <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+    </select>
+    <small *ngIf="(submitted) && !(zonaId && zonaId.trim())" class="error-text">Debe seleccionar una zona.</small>
+    <small *ngIf="!((submitted) && !(zonaId && zonaId.trim()))" class="help-text">Zona dentro del restaurante</small>
+  </div>
+
+  <div class="form-group">
+    <label>Mesa</label>
+    <select [(ngModel)]="mesaId">
+      <option value="">Ninguna</option>
+      <option *ngFor="let m of mesas" [value]="m.id">{{ m.nombre }}</option>
+    </select>
+    <small class="help-text">Selecciona una mesa </small>
+  </div>
+    
+  <div class="cantidad-container" style="min-width:120px;">
+        <label  class="cantidad">Cantidad</label>
+        <input class="cantidad-input" type="number" min="1" [(ngModel)]="cantidadPersonas">
+        <small class="help-text">Número de personas</small>
+    </div>
+
+  <label class="section-title">Fecha y Hora</label>
+
+  <div class="form-group horario-input">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <div style="min-width:180px;">
+        <label>Fecha *</label>
+        <input type="date" [(ngModel)]="fecha" [class.input-error]="submitted && !fecha">
+        <small *ngIf="submitted && !fecha" class="error-text">Se requiere fecha.</small>
+      </div>
+
+      <div style="min-width:120px;">
+        <label>Hora *</label>
+        <input type="time" [(ngModel)]="hora" [class.input-error]="submitted && !hora">
+        <small *ngIf="submitted && !hora" class="error-text">Se requiere hora.</small>
+      </div>
+  </div>
+    </div>
+
+  <label class="section-title">Datos del cliente</label>
+
+  <div class="form-group">
+    <label>Nombre *</label>
+    <input type="text" [(ngModel)]="nombreCliente" (blur)="touchedNombre = true" [class.input-error]="(submitted || touchedNombre) && !(nombreCliente && nombreCliente.trim())">
+    <small *ngIf="(submitted || touchedNombre) && !(nombreCliente && nombreCliente.trim())" class="error-text">El nombre es obligatorio.</small>
+  </div>
+
+  <div class="form-group">
+    <label>Apellido *</label>
+    <input type="text" [(ngModel)]="apellidoCliente" [class.input-error]="submitted && !(apellidoCliente && apellidoCliente.trim())">
+    <small *ngIf="submitted && !(apellidoCliente && apellidoCliente.trim())" class="error-text">El apellido es obligatorio.</small>
+  </div>
+
+  <div class="form-group">
+    <label>Teléfono</label>
+    <input type="tel" [(ngModel)]="telefono">
+    <small class="help-text">Opcional, para contacto de confirmación</small>
+  </div>
+
+  <div class="acciones">
+    <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+    <button class="btn-guardar" (click)="guardar()">
+      <img src="assets/icons/guardar.png" alt="">
+      {{ id ? 'Actualizar Reserva' : 'Guardar Reserva' }}
+    </button>
+  </div>
+
+</div>

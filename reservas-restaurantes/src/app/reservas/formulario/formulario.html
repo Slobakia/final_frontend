@@ -1,44 +1,230 @@
-<h2>{{id ? 'Editar Reserva' : 'Nueva Reserva'}}</h2>
+<div class="wizard-container">
 
-<div class="form-container">
+  <header class="wizard-header">
+    <div class="header-top">
+      <button class="btn-back" (click)="atras()">
+        <img src="assets/icons/atras.png" alt="Volver">
+      </button>
+      <div class="header-title">
+        <h1>Nueva Reserva</h1>
+        <p>Completa el proceso paso a paso</p>
+      </div>
+    </div>
+    
+    <div class="pasos">
+      <div class="paso" [class.activo]="pasoActual === 1" [class.completado]="pasoActual > 1" (click)="irAPaso(1)">
+        <span class="paso-numero"><img src="assets/icons/restaurante.png" alt="Restaurante"></span>
+        <span class="paso-texto">Restaurante</span>
+      </div>
+      <div class="paso" [class.activo]="pasoActual === 2" [class.completado]="pasoActual > 2" (click)="irAPaso(2)">
+        <span class="paso-numero"><img src="assets/icons/zona.png" alt="Zona"></span>
+        <span class="paso-texto">Zona</span>
+      </div>
+      <div class="paso" [class.activo]="pasoActual === 3" [class.completado]="pasoActual > 3" (click)="irAPaso(3)">
+        <span class="paso-numero"><img src="assets/icons/reserva.png" alt="Fecha"></span>
+        <span class="paso-texto">Fecha y Hora</span>
+      </div>
+      <div class="paso" [class.activo]="pasoActual === 4" [class.completado]="pasoActual > 4" (click)="irAPaso(4)">
+        <span class="paso-numero"><img src="assets/icons/personas.png" alt="Personas"></span>
+        <span class="paso-texto">Personas</span>
+      </div>
+      <div class="paso" [class.activo]="pasoActual === 5" [class.completado]="pasoActual > 5" (click)="irAPaso(5)">
+        <span class="paso-numero"><img src="assets/icons/cliente.png" alt="Cliente"></span>
+        <span class="paso-texto">Datos Cliente</span>
+      </div>
+    </div>
+  </header>
 
-  <label>Restaurante</label>
-  <select [(ngModel)]="restauranteId" (change)="cargarZonas()">
-    <option value="">Seleccione...</option>
-    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
-  </select>
+  <div class="paso-contenido">
+    <div *ngIf="pasoActual === 1" class="paso-1">
+      <div class="info-text-restaurante">
+        <p class="restaurant-title">Selecciona el Restaurante</p>
+        <p class="restaurant-subtitle">Elige dónde deseas hacer tu reserva</p>
+      </div>
 
-  <label>Zona</label>
-  <select [(ngModel)]="zonaId" (change)="cargarHorarios()">
-    <option value="">Seleccione...</option>
-    <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
-  </select>
+      <div class="restaurantes-grid">
+        <div *ngFor="let restaurante of restaurantes" 
+             class="restaurante-card" 
+             [class.seleccionado]="restauranteId === restaurante.id"
+             (click)="restauranteId = restaurante.id">
+          <div class="card-left">
+            <img src="assets/icons/restaurante.png" class="restaurante-icon" alt="Restaurante">
+            <h3 class="restaurante-name">{{ restaurante.nombre }}</h3>
+            <span class="badge" *ngIf="restauranteId === restaurante.id">Seleccionado</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <label>Fecha</label>
-  <input type="date" [(ngModel)]="fecha">
+    <div *ngIf="pasoActual === 2" class="paso-2">
+      <div class="info-text-zona">
+        <p class="zona-title">Selecciona la Zona</p>
+        <p class="zona-subtitle">Elige el ambiente de tu preferencia</p>
+      </div>
 
-  <label>Horario</label>
-  <select [(ngModel)]="hora">
-    <option value="">Seleccione...</option>
-    <option *ngFor="let h of horariosZona">{{ h }}</option>
-  </select>
+      <div class="zonas-grid">
+        <div *ngFor="let zona of zonas" 
+             class="zona-card" 
+             [class.seleccionada]="zonaId === zona.id"
+             (click)="zonaId = zona.id">
+          <div class="card-left">
+            <img src="assets/icons/zona.png" class="zona-icon" alt="Zona">
+            <h3 class="zona-name">{{ zona.nombre }}</h3>
+            <span class="badge" *ngIf="zonaId === zona.id">Seleccionada</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <label>Cantidad de Personas</label>
-  <input type="number" min="1" [(ngModel)]="cantidadPersonas">
+    <div *ngIf="pasoActual === 3" class="paso-3">
+      <div class="info-text-fecha">
+        <p class="fecha-title">Selecciona Fecha y Hora</p>
+        <p class="fecha-subtitle">Elige cuándo deseas tu reserva</p>
+      </div>
 
-  <label>Nombre</label>
-  <input type="text" [(ngModel)]="nombreCliente">
+      <div class="fecha-hora-row">
+        <div class="calendario-section">
+          <div class="calendario-header">
+            <h3 class="section-title">Fecha de Reserva</h3>
+            <span class="section-subtitle">{{ mesActual }} {{ anioActual }}</span>
+          </div>
 
-  <label>Apellido</label>
-  <input type="text" [(ngModel)]="apellidoCliente">
+          <div class="calendario">
+            <div class="dias-semana">
+              <span>Do</span><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span>
+            </div>
 
-  <label>Teléfono</label>
-  <input type="text" [(ngModel)]="telefono">
+            <div class="dias-mes">
+              <div *ngFor="let celda of diasCalendario" 
+                  class="dia" 
+                  [class.inactivo]="!celda || celda.inactive"
+                  [class.seleccionado]="celda && !celda.inactive && estaDiaSeleccionado(celda.num)"
+                  (click)="celda && !celda.inactive && seleccionarFecha(celda.num)">
+                {{ celda.num ? celda.num : '' }}
+              </div>
+            </div>
 
-  <p class="error" *ngIf="mensajeError">{{ mensajeError }}</p>
+            <div class="calendario-controls" style="margin-top:8px; display:flex; gap:8px; justify-content:center;">
+              <button class="btn-small" (click)="cambiarMes(-1)">◀ Anterior</button>
+              <button class="btn-small" (click)="cambiarMes(1)">Siguiente ▶</button>
+            </div>
+          </div>
+        </div>
 
-  <div class="acciones">
-    <button class="btn-confirmar" (click)="confirmar()">{{id ? 'Actualizar Reserva' : 'Confirmar Reserva'}}</button>
+        <div class="horarios-section">
+          <h3 class="section-title">Horario Disponible</h3>
+          <div class="horarios-grid">
+            <div *ngFor="let horario of horariosDisponibles" 
+                class="horario-option" 
+                [class.seleccionado]="hora === horario"
+                (click)="hora = horario">
+              {{ horario }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="pasoActual === 4" class="paso-4">
+      <div class="info-text-personas">
+        <p class="personas-title">Selecciona la Cantidad de Personas</p>
+        <p class="personas-subtitle">Indica para cuántas personas es la reserva</p>
+      </div>
+      
+      <div class="cantidad-section">
+        <div class="cantidad-control">
+          <button class="btn-cantidad" (click)="disminuirCantidad()">-</button>
+          <span class="cantidad-display">{{ cantidadPersonas }}</span>
+          <button class="btn-cantidad" (click)="aumentarCantidad()">+</button>
+        </div>
+        
+        <div class="seleccion-rapida">
+          <h4>Selección Rápida</h4>
+          <div class="opciones-rapidas">
+            <button *ngFor="let opcion of [2, 4, 6, 8, 10]" 
+                    class="btn-rapido" 
+                    [class.seleccionado]="cantidadPersonas === opcion"
+                    (click)="seleccionarCantidadRapida(opcion)">
+              {{ opcion }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="pasoActual === 5" class="paso-5">
+      <div class="info-text-cliente">
+        <h2 class="cliente-title">Datos del Cliente</h2>
+        <p class="cliente-subtitle">Completa tu información de contacto</p>
+      </div>
+          
+      <div class="datos-resumen-row">
+        <div class="datos-cliente">
+          <div class="form-table">
+            <div class="form-row-table">
+              <div class="form-cell">
+                <label>Nombre</label>
+                <input type="text" [(ngModel)]="nombreCliente" placeholder="Juan" class="table-input">
+              </div>
+              <div class="form-cell">
+                <label>Apellido</label>
+                <input type="text" [(ngModel)]="apellidoCliente" placeholder="Pérez" class="table-input">
+              </div>
+            </div>
+            
+            <div class="form-row-table">
+              <div class="form-cell-full">
+                <label>Teléfono</label>
+                <input type="tel" [(ngModel)]="telefono" placeholder="+595 123 456 789" class="table-input">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="resumen-reserva centered-summary">
+          <div class="resumen-content">
+            <h3 class="resumen-title">Resumen de la Reserva</h3>
+            <div class="resumen-detalles">
+              <div class="resumen-item">
+                <span class="resumen-label">Restaurante:</span>
+                <span class="resumen-value">{{ getNombreRestaurante() }}</span>
+              </div>
+              <div class="resumen-item">
+                <span class="resumen-label">Zona:</span>
+                <span class="resumen-value">{{ getNombreZona() }}</span>
+              </div>
+              <div class="resumen-item">
+                <span class="resumen-label">Fecha:</span>
+                <span class="resumen-value">{{ getFechaFormateada() }}</span>
+              </div>
+              <div class="resumen-item">
+                <span class="resumen-label">Hora:</span>
+                <span class="resumen-value">{{ hora }}</span>
+              </div>
+              <div class="resumen-item">
+                <span class="resumen-label">Personas:</span>
+                <span class="resumen-value">{{ cantidadPersonas }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
+  <!-- Navegación -->
+  <div class="navegacion">
+    <button class="btn-anterior" (click)="anteriorPaso()" *ngIf="pasoActual > 1">
+      ← Anterior
+    </button>
+    
+    <button class="btn-siguiente" (click)="siguientePaso()" *ngIf="pasoActual < 5" [disabled]="!validarPasoActual()">
+      Siguiente →
+    </button>
+    
+    <button class="btn-confirmar" (click)="confirmarReserva()" *ngIf="pasoActual === 5" [disabled]="!validarPasoActual()">
+      Confirmar Reserva
+    </button>
+  </div>
 </div>
