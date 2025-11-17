@@ -1,52 +1,152 @@
-<h2>Listado de Reservas</h2>
+<div class="reservas-container">
+  <header class="page-header">
+    <div class="header-info">
+      <button class="btn-back" (click)="atras()">
+        <img src="assets/icons/atras.png" alt="Volver">
+      </button>
+      <div class="header-icon-container">
+        <img src="assets/icons/reserva.png" alt="Reservas" class="header-icon">
+      </div>
+      <div>
+        <h1>Gestión de Reservas</h1>
+        <p>Visualiza y administra todas las reservas</p>
+      </div>
+    </div>
 
-<div class="filtros">
-  <label>Restaurante</label>
-  <select [(ngModel)]="filtroRestaurante" (change)="onChangeRestaurante()">
-    <option value="">-- Todos --</option>
-    <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
-  </select>
+    <button class="btn-nueva-reserva" (click)="nuevo()">
+      + Nueva Reserva
+    </button>
+  </header>
 
-  <label>Zona</label>
-  <select [(ngModel)]="filtroZona" (change)="onChangeZona()">
-    <option value="">-- Todas --</option>
-    <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
-  </select>
+  <section class="filtros-card">
 
-  <label>Fecha</label>
-  <input type="date" [(ngModel)]="filtroFecha" (change)="onChangeFecha()">
+    <div class="filtros-header">
+      <img src="assets/icons/filtro.png" class="filtros-icon">
+      <h3>Filtros</h3>
+    </div>
 
-  <button class="btn-nuevo" (click)="nuevo()">Nueva Reserva</button>
+    <div class="filtros-grid">
+
+      <input 
+        type="text" 
+        class="input-buscar"
+        placeholder="Buscar por nombre..."
+        [(ngModel)]="searchTerm"
+        (input)="aplicarFiltros()"
+      >
+
+      <select class="select" [(ngModel)]="filtroRestaurante" (change)="onChangeRestaurante()">
+        <option value="">Todos los restaurantes</option>
+        <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
+      </select>
+
+      <select class="select" [(ngModel)]="filtroZona" (change)="onChangeZona()">
+        <option value="">Todas las zonas</option>
+        <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+      </select>
+
+      <div class="input-fecha-container">
+        <img src="assets/icons/reserva.png">
+        <input type="date" [(ngModel)]="filtroFecha" (change)="onChangeFecha()">
+      </div>
+
+    </div>
+
+  </section>
+  <section class="stats-grid">
+
+    <div class="stat-card">
+      <h4>Total Reservas</h4>
+      <p class="stat-number">{{ reservas.length }}</p>
+      <div class="icon-bg">
+        <img src="assets/icons/reserva.png" class="stat-icon">
+      </div>
+    </div>
+
+  </section>
+  <section class="reserva-lista">
+
+    <div class="reserva-card" *ngFor="let r of mostradas">
+
+      <div class="reserva-fecha">
+        <h2>{{ r.fecha | date:'dd' }}</h2>
+        <p>{{ r.fecha | date:'MMM' }}</p>
+        <span class="reserva-hora">{{ r.hora }}</span>
+      </div>
+
+      <div class="reserva-info">
+        
+        <h3 class="cliente">{{ r.nombreCliente }} {{ r.apellidoCliente }}</h3>
+        <p class="telefono"> {{ r.telefono }}</p>
+
+        <div class="info-grid">
+
+          <div class="info-item">
+            <div class="img-col">
+              <img src="assets/icons/restaurante.png" alt="restaurante">
+            </div>
+            <div class="text-col">
+              <label class="label-info">Restaurante</label>
+              <span>{{ obtenerNombreRestaurante(r.restauranteId) }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="img-col">
+              <img src="assets/icons/zona.png" alt="zona">
+            </div>
+            <div class="text-col">
+              <label class="label-info">Zona</label>
+              <span>{{ obtenerNombreZona(r.zonaId) }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="img-col">
+              <img src="assets/icons/mesa.png" alt="mesa">
+            </div>
+            <div class="text-col">
+              <label class="label-info">Mesa</label>
+              <span>{{ obtenerMesa(r.mesaId) }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="img-col">
+              <img src="assets/icons/personas.png" alt="personas">
+            </div>
+            <div class="text-col">
+              <label class="label-info">Personas</label>
+              <span>{{ r.cantidadPersonas }}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Acciones -->
+      <div class="reserva-acciones">
+
+        <button class="btn-editar" (click)="editar(r.id)">
+          Editar
+        </button>
+
+        <button class="btn-cancelar" (click)="eliminar(r.id)">
+          Eliminar
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="no-resultados" *ngIf="mostradas.length === 0">
+      <div class="no-resultados-icon">
+        <img src="assets/icons/reserva.png" alt="No reservas">
+      </div>
+      <p>No hay reservas con esos filtros.</p>
+    </div>
+
+  </section>
+
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Cliente</th>
-      <th>Restaurante</th>
-      <th>Zona</th>
-      <th>Fecha</th>
-      <th>Hora</th>
-      <th>Mesa</th>
-      <th class="acciones-col">Acciones</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr *ngFor="let r of mostradas">
-      <td>{{ r.nombreCliente }} {{ r.apellidoCliente }}</td>
-      <td>{{ obtenerNombreRestaurante(r.restauranteId) }}</td>
-      <td>{{ obtenerNombreZona(r.zonaId) }}</td>
-      <td>{{ r.fecha }}</td>
-      <td>{{ r.hora }}</td>
-      <td>{{ obtenerMesa(r.mesaId) }}</td>
-      <td class="acciones-col">
-        <button class="btn-editar" (click)="editar(r.id)">Editar</button>
-        <button class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
-      </td>
-    </tr>
-    <tr *ngIf="mostradas.length === 0">
-      <td colspan="7">No hay reservas con esos filtros.</td>
-    </tr>
-  </tbody>
-</table>

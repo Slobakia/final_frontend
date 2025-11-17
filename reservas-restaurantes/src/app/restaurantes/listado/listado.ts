@@ -14,7 +14,12 @@ import { Restaurante } from '../../models/restaurante';
 })
 export class ListadoComponent {
 
+  // Lista completa (sin filtrar) y lista mostrada en la UI
+  restaurantesAll: Restaurante[] = [];
   restaurantes: Restaurante[] = [];
+
+  // propiedad vinculada al input de búsqueda
+  searchTerm: string = '';
 
   constructor(
     private service: RestauranteService,
@@ -24,7 +29,8 @@ export class ListadoComponent {
   }
 
   cargar() {
-    this.restaurantes = this.service.getAll();
+    this.restaurantesAll = this.service.getAll();
+    this.aplicarFiltros();
   }
 
   nuevo() {
@@ -38,5 +44,21 @@ export class ListadoComponent {
   eliminar(id: string) {
     this.service.delete(id);
     this.cargar();
+  }
+
+  atras() {
+    this.router.navigate(['']);
+  }
+
+  aplicarFiltros() {
+    const term = (this.searchTerm || '').trim().toLowerCase();
+    if (!term) {
+      this.restaurantes = [...this.restaurantesAll];
+      return;
+    }
+    this.restaurantes = this.restaurantesAll.filter(r => {
+      const nombre = (r.nombre || '').toLowerCase();
+      return nombre.includes(term);
+    });
   }
 }

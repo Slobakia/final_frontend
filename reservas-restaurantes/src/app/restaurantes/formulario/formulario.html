@@ -1,11 +1,33 @@
-<h2>{{ id ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h2>
+<div class="form-header">
+  <button class="btn-back" (click)="cancelar()">
+    <img src="assets/icons/atras.png" alt="Volver">
+  </button>
 
-<div class="form-container">
-  <label>Nombre del Restaurante</label>
-  <input type="text" [(ngModel)]="nombre" placeholder="Ej: La Parrilla de Juan">
+  <div class="header-title">
+    <img src="assets/icons/restaurante.png" class="header-icon" alt="Restaurante">
+    <div>
+      <h2>{{ id ? 'Editar Restaurante' : 'Nuevo Restaurante' }}</h2>
+      <p>Completa la información del restaurante</p>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="form-card">
+  <div class="form-group">
+    <label>Nombre del Restaurante *</label>
+      <input type="text" [(ngModel)]="nombre" placeholder="Ej: El Asador" (blur)="touchedNombre = true" [class.input-error]="(submitted || touchedNombre) && !(nombre && nombre.trim())">
+      <p *ngIf="(submitted || touchedNombre) && !(nombre && nombre.trim())" class="error-text">El nombre es obligatorio.</p>
+      <small *ngIf="!((submitted || touchedNombre) && !(nombre && nombre.trim()))" class="help-text">Ingrese el nombre del restaurante</small>
+  </div>
 
   <div class="acciones">
     <button class="btn-cancelar" (click)="cancelar()">Cancelar</button>
-    <button class="btn-guardar" (click)="guardar()">Guardar</button>
+    <button class="btn-guardar" (click)="guardar()">
+      <img src="assets/icons/guardar.png" alt="">
+      {{ id ? 'Actualizar Restaurante' : 'Guardar Restaurante' }}
+    </button>
   </div>
+
 </div>

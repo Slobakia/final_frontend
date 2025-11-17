@@ -1,23 +1,78 @@
-<h2>Listado de Restaurantes</h2>
+<div class="zonas-container">
 
-<button class="btn-nuevo" (click)="nuevo()">Nuevo Restaurante</button>
+  <header class="page-header">
+    <div class="header-info">
+      <button class="btn-back" (click)="atras()">
+        <img src="assets/icons/atras.png" alt="Volver">
+      </button>
+      <div class="header-icon-container">
+        <img src="assets/icons/restaurante.png" alt="Restaurantes" class="header-icon">
+      </div>
+      <div>
+        <h1>Listado de Restaurantes</h1>
+        <p>Administra los restaurantes disponibles</p>
+      </div>
+    </div>
+    <div>
+      <button class="btn-nuevo-restaurante" (click)="nuevo()">
+        + Nuevo Restaurante
+      </button>
+    </div>
+  </header>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th class="acciones-col">Acciones</th>
-    </tr>
-  </thead>
+  <div class="top-actions">
 
-  <tbody>
-    <tr *ngFor="let r of restaurantes">
-      <td>{{ r.nombre }}</td>
+    <div class="search-filters">
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Buscar restaurantes..." 
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          (input)="aplicarFiltros()"
+        >
+      </div>
+    </div>
+  </div>
+  
+  <section class="stats-section">
+    <div class="stat-card">
+      <div class="stat-content">
+        <h3>Total Restaurantes</h3>
+        <p class="stat-number">{{ restaurantes.length }}</p>
+      </div>
+      <img src="assets/icons/restaurante.png" alt="Restaurantes" class="stat-icon">
+    </div>
+  </section>
 
-      <td class="acciones-col">
-        <button class="btn-editar" (click)="editar(r.id)">Editar</button>
-        <button class="btn-eliminar" (click)="eliminar(r.id)">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div *ngIf="restaurantes.length === 0" class="no-zonas">
+    <img src="assets/icons/restaurante.png" alt="No restaurantes" class="no-zonas-icon">
+    <p class="no-zonas">No se encontraron restaurantes.</p>
+  </div>
+
+  <section class="zonas-grid">
+
+    <div class="zona-card" *ngFor="let r of restaurantes">
+
+      <img src="assets/icons/restaurante.png" class="zona-icon" alt="Restaurante">
+
+      <h3 class="zona-name">{{ r.nombre }}</h3>
+
+      <div class="zona-footer">
+        <div class="zona-buttons">
+          <button class="btn-editar" (click)="editar(r.id)">
+            <img src="assets/icons/editar.png" alt="Editar">
+            Editar
+          </button>
+
+          <button class="btn-eliminar" (click)="eliminar(r.id)">
+            <img src="assets/icons/eliminar.png" alt="Eliminar">
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>

@@ -31,6 +31,8 @@ export class ListadoComponent {
   filtroZona: string = '';
   filtroFecha: string = '';
 
+  searchTerm: string = '';
+
   constructor(
     private reservaService: ReservaService,
     private restauranteService: RestauranteService,
@@ -62,10 +64,15 @@ export class ListadoComponent {
   }
 
   aplicarFiltros() {
+    const term = (this.searchTerm || '').trim().toLowerCase();
     this.mostradas = this.reservas.filter(r => {
       if (this.filtroRestaurante && r.restauranteId !== this.filtroRestaurante) return false;
       if (this.filtroZona && r.zonaId !== this.filtroZona) return false;
       if (this.filtroFecha && r.fecha !== this.filtroFecha) return false;
+      if (term) {
+        const nombreCompleto = `${r.nombreCliente || ''} ${r.apellidoCliente || ''}`.toLowerCase();
+        if (!nombreCompleto.includes(term)) return false;
+      }
       return true;
     });
   }
@@ -97,7 +104,7 @@ export class ListadoComponent {
 
   obtenerMesa(id: string) {
     const mesa = this.mesaService.getById(id);
-    return mesa ? `Mesa ${mesa.numero} (${mesa.capacidad} personas)` : '';
+    return mesa ? `Mesa ${mesa.numero}` : '';
   }
 
   editar(id: string) {
@@ -107,5 +114,9 @@ export class ListadoComponent {
   eliminar(id: string) {
     this.reservaService.delete(id);
     this.cargar();
+  }
+
+  atras() {
+    this.router.navigate(['']);
   }
 }

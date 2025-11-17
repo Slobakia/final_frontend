@@ -15,6 +15,8 @@ export class FormularioComponent {
 
   id: string | null = null;
   nombre: string = '';
+  submitted: boolean = false;
+  touchedNombre: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +32,10 @@ export class FormularioComponent {
   }
 
   guardar() {
-    if (!this.nombre.trim()) return;
+    this.submitted = true;
+    if (!this.nombre.trim()){
+      return;
+    }
 
     if (this.id) {
       this.service.update(this.id, this.nombre);

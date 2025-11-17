@@ -19,9 +19,13 @@ import { Restaurante } from '../../models/restaurante';
 export class ListadoComponent {
 
   mesas: Mesa[] = [];
+  mesasAll: Mesa[] = [];
   zonaId: string = '';
   restaurantes: Restaurante[] = [];
   zonas: Zona[] = [];
+
+  // búsqueda
+  searchTerm: string = '';
 
   filtroRestaurante: string = '';
   filtroZona: string = '';
@@ -56,15 +60,16 @@ export class ListadoComponent {
   // cargar mesas según filtros activos
   cargarMesas() {
     if (this.filtroZona) {
-      this.mesas = this.service.getByZona(this.filtroZona);
+      this.mesasAll = this.service.getByZona(this.filtroZona);
     } else if (this.filtroRestaurante) {
       // si hay restaurante pero no zona, juntamos todas las mesas de sus zonas
       const zonas = this.zonaService.getByRestaurante(this.filtroRestaurante);
       const ids = zonas.map(z => z.id);
-      this.mesas = this.service.getAll().filter(m => ids.includes(m.zonaId));
+      this.mesasAll = this.service.getAll().filter(m => ids.includes(m.zonaId));
     } else {
-      this.mesas = this.service.getAll();
+      this.mesasAll = this.service.getAll();
     }
+    this.aplicarFiltros();
   }
 
   onChangeRestaurante() {
@@ -96,5 +101,23 @@ export class ListadoComponent {
   eliminar(id: string) {
     this.service.delete(id);
     this.cargarMesas();
+  }
+
+  atras() {
+    this.router.navigate(['']);
+  }
+
+  aplicarFiltros() {
+    const term = (this.searchTerm || '').trim().toLowerCase();
+    if (!term) {
+      this.mesas = [...this.mesasAll];
+      return;
+    }
+    this.mesas = this.mesasAll.filter(m => {
+      const numero = (m.numero || '').toLowerCase();
+      const zona = (this.obtenerZona(m.zonaId) || '').toLowerCase();
+      const restaurante = (this.obtenerRestauranteDesdeZona(m.zonaId) || '').toLowerCase();
+      return numero.includes(term) || zona.includes(term) || restaurante.includes(term);
+    });
   }
 }
