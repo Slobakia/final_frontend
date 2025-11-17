@@ -113,6 +113,25 @@
   color: #888;
 }
 
+.error-text {
+  color: #c00000;
+  font-size: 13px;
+  margin-top: 6px;
+  display: block;
+}
+
+.help-text{
+  color: #888;
+  font-size: 13px;
+  margin-top: 6px;
+  display: block;
+}
+
+.input-error {
+  border-color: #c00000 !important;
+  box-shadow: 0 0 0 3px rgba(192,0,0,0.06);
+}
+
 .horario-input .horario-add {
   display: flex;
   gap: 10px;

@@ -24,6 +24,12 @@ export class FormularioComponent {
 
   restaurantes: any[] = [];
   zonas: any[] = [];
+  zonasUnicas: any[] = [];
+  submitted: boolean = false;
+  touchedRestaurante: boolean = false;
+  touchedZona: boolean = false;
+  touchedNumero: boolean = false;
+  touchedCapacidad: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +39,14 @@ export class FormularioComponent {
     private zonaService: ZonaService,
   ) {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.zonaId = this.route.snapshot.paramMap.get('zonaId') || '';
+    this.zonaId = this.route.snapshot.queryParamMap.get('zonaId') || this.route.snapshot.paramMap.get('zonaId') || '';
     this.restaurantes = this.restauranteService.getAll();
+    if (this.zonaId) {
+      const zona = this.zonaService.getById(this.zonaId);
+      if (zona) this.restauranteId = zona.restauranteId;
+    }
+
+    this.cargarZonas();
 
     if (this.id) {
       const mesa = this.service.getById(this.id);
@@ -42,15 +54,24 @@ export class FormularioComponent {
         this.numero = mesa.numero;
         this.capacidad = mesa.capacidad;
         this.zonaId = mesa.zonaId;
+        const zona = this.zonaService.getById(mesa.zonaId);
+        if (zona) this.restauranteId = zona.restauranteId;
+        this.cargarZonas();
       }
     }
   }
 
   cargarZonas() {
-    this.zonas = this.zonaService.getByRestaurante(this.restauranteId);
+    this.zonas = this.restauranteId ? this.zonaService.getByRestaurante(this.restauranteId) : this.zonaService.getAll();
+    this.zonasUnicas = this.zonas.filter((z: any, i: number, arr: any[]) => arr.findIndex(x => x.nombre === z.nombre) === i);
   }
 
   guardar() {
+    this.submitted = true;
+    if (!(this.restauranteId && this.restauranteId.trim()) || !(this.zonaId && this.zonaId.trim()) || !(this.numero && this.numero.trim()) || !(this.capacidad && this.capacidad >= 1)) {
+      return;
+    }
+
     if (this.id) {
       this.service.update(this.id, {
         numero: this.numero,

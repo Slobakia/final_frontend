@@ -17,17 +17,19 @@
 <div class="form-card">
   <div class="form-group">
     <label>Restaurante *</label>
-    <select [(ngModel)]="restauranteId">
+    <select [(ngModel)]="restauranteId" (blur)="touchedRestaurante = true" [class.input-error]="(submitted || touchedRestaurante) && !(restauranteId && restauranteId.trim())">
       <option value="">Seleccione un restaurante...</option>
       <option *ngFor="let r of restaurantes" [value]="r.id">{{ r.nombre }}</option>
     </select>
-    <small>El restaurante al que pertenece la zona</small>
+    <small *ngIf="(submitted || touchedRestaurante) && !(restauranteId && restauranteId.trim())" class="error-text">Debe seleccionar un restaurante.</small>
+    <small *ngIf="!((submitted || touchedRestaurante) && !(restauranteId && restauranteId.trim()))" class="help-text">El restaurante al que pertenece la zona</small>
   </div>
 
   <div class="form-group">
     <label>Nombre de la Zona *</label>
-    <input type="text" [(ngModel)]="nombre" placeholder="Ej: Terraza">
-    <small>El nombre con el que se identificará la zona</small>
+    <input type="text" [(ngModel)]="nombre" placeholder="Ej: Terraza" (blur)="touchedNombre = true" [class.input-error]="(submitted || touchedNombre) && !(nombre && nombre.trim())">
+    <small *ngIf="(submitted || touchedNombre) && !(nombre && nombre.trim())" class="error-text">El nombre de la zona es obligatorio.</small>
+    <small *ngIf="!((submitted || touchedNombre) && !(nombre && nombre.trim()))" class="help-text">El nombre con el que se identificará la zona</small>
   </div>
 
   <label class="section-title">Horarios</label>
@@ -37,7 +39,8 @@
       <input type="time" [(ngModel)]="horarioTemporal">
       <button class="btn-add" (click)="agregarHorario()">Agregar</button>
     </div>
-    <small>Hora en formato 24h</small>
+    <small *ngIf="(submitted) && !(horarios && horarios.length>0)" class="error-text">Debes agregar al menos un horario.</small>
+    <small *ngIf="!((submitted) && !(horarios && horarios.length>0))">Hora en formato 24h</small>
   </div>
 
   <div class="horarios-list" *ngIf="horarios.length > 0">

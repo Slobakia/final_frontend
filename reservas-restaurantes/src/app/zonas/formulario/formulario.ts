@@ -21,6 +21,9 @@ export class FormularioComponent {
   horarios: string[] = [];
   horarioTemporal: string = '';
   restaurantes: any[] = [];
+  submitted: boolean = false;
+  touchedNombre: boolean = false;
+  touchedRestaurante: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +61,11 @@ export class FormularioComponent {
   }
 
   guardar() {
+    this.submitted = true;
+    if (!(this.restauranteId && this.restauranteId.trim()) || !(this.nombre && this.nombre.trim()) || !(this.horarios && this.horarios.length > 0)) {
+      return;
+    }
+
     if (this.id) {
       this.zonaService.update(this.id, {
         nombre: this.nombre,

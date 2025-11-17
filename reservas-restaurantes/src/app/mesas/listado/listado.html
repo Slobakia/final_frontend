@@ -36,7 +36,12 @@
 
       <select class="select" [(ngModel)]="filtroZona" (change)="onChangeZona()">
         <option value=""> Todas las zonas </option>
-        <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+        <ng-container *ngIf="!filtroRestaurante; else zonasFiltradas">
+          <option *ngFor="let z of zonasUnicas" [value]="z.id">{{ z.nombre }} - {{ obtenerRestauranteDesdeZona(z.id) }}</option>
+        </ng-container>
+        <ng-template #zonasFiltradas>
+          <option *ngFor="let z of zonas" [value]="z.id">{{ z.nombre }}</option>
+        </ng-template>
       </select>
 
       <div class="input-fecha-container" style="visibility:hidden"></div>

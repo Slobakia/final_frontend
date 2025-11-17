@@ -23,6 +23,7 @@ export class ListadoComponent {
   zonaId: string = '';
   restaurantes: Restaurante[] = [];
   zonas: Zona[] = [];
+  zonasUnicas: Zona[] = [];
 
   // búsqueda
   searchTerm: string = '';
@@ -54,6 +55,8 @@ export class ListadoComponent {
     if (this.filtroZona && !this.zonas.find(z => z.id === this.filtroZona)) {
       this.filtroZona = '';
     }
+    // calcular lista de zonas únicas por nombre para templates
+    this.zonasUnicas = this.zonas.filter((z: Zona, i: number, arr: Zona[]) => arr.findIndex(x => x.nombre === z.nombre) === i);
     this.cargarMesas();
   }
 
